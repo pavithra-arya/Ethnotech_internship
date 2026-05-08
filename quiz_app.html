@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz App</title>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: black;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <h1>Quiz Application</h1>
+
+    <form id="quizForm">
+
+        <!-- Questions will come from backend -->
+
+    </form>
+
+    <button onclick="submitQuiz()">
+        Submit Quiz
+    </button>
+
+    <h2 id="result"></h2>
+
+    <script>
+
+        // Backend Questions
+
+        const questions = [
+
+            {
+                question: "What is HTML?",
+                options: [
+                    "Programming Language",
+                    "Markup Language",
+                    "Database",
+                    "Operating System"
+                ],
+                answer: "Markup Language"
+            },
+
+            {
+                question: "Which language is used for styling?",
+                options: [
+                    "Python",
+                    "CSS",
+                    "Java",
+                    "C"
+                ],
+                answer: "CSS"
+            },
+
+            {
+                question: "Which keyword is used to declare variable in JavaScript?",
+                options: [
+                    "var",
+                    "print",
+                    "echo",
+                    "define"
+                ],
+                answer: "var"
+            }
+
+        ];
+
+
+        // Show Questions
+
+        const form =
+            document.getElementById("quizForm");
+
+
+        questions.forEach((q, index) => {
+
+            let div =
+                document.createElement("div");
+
+            div.classList.add("question");
+
+
+            let questionHTML =
+                `<h3>${index + 1}. ${q.question}</h3>`;
+
+
+            q.options.forEach(option => {
+
+                questionHTML +=
+                `
+                <label>
+                    <input
+                        type="radio"
+                        name="question${index}"
+                        value="${option}"
+                    >
+
+                    ${option}
+
+                </label>
+
+                <br>
+                `;
+            });
+
+            div.innerHTML = questionHTML;
+
+            form.appendChild(div);
+
+        });
+
+
+        // Submit Quiz
+
+        function submitQuiz() {
+
+            let score = 0;
+
+            questions.forEach((q, index) => {
+
+                let selected =
+                    document.querySelector(
+                        `input[name="question${index}"]:checked`
+                    );
+
+                if (
+                    selected &&
+                    selected.value === q.answer
+                ) {
+                    score++;
+                }
+
+            });
+
+            document.getElementById("result")
+                .innerHTML =
+                "Your Score: " +
+                score +
+                " / " +
+                questions.length;
+
+        }
+
+    </script>
+
+</body>
+</html>
