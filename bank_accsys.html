@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank Account System</title>
+</head>
+
+<body>
+
+    <h1>Bank Account System</h1>
+
+    <div id="output"></div>
+
+    <script>
+
+        let output =
+            document.getElementById("output");
+
+        function print(message) {
+
+            output.innerHTML +=
+                message + "<br>";
+
+        }
+
+        class BankAccount {
+
+            #balance = 0;
+            #pin;
+
+            transactionHistory = [];
+
+            constructor(name, pin, balance = 0) {
+
+                this.name = name;
+
+                this.#pin = pin;
+
+                this.#balance = balance;
+
+            }
+
+            verifyPin(pin) {
+
+                if (this.#pin === pin) {
+
+                    return true;
+
+                }
+
+                else {
+
+                    print("Incorrect PIN");
+
+                    return false;
+
+                }
+
+            }
+
+            deposit(amount) {
+
+                if (amount > 0) {
+
+                    this.#balance += amount;
+
+                    this.transactionHistory.push(
+                        "Deposited ₹" + amount
+                    );
+
+                    print("Deposited ₹" + amount);
+
+                }
+
+            }
+
+            withdraw(amount) {
+
+                if (amount <= 0) {
+
+                    print("Invalid withdrawal amount");
+
+                }
+
+                else if (amount > this.#balance) {
+
+                    print("Insufficient Balance");
+
+                }
+
+                else {
+
+                    this.#balance -= amount;
+
+                    this.transactionHistory.push(
+                        "Withdrawn ₹" + amount
+                    );
+
+                    print("Withdrawn ₹" + amount);
+
+                }
+
+            }
+
+            showBalance() {
+
+                print(
+                    "Balance: ₹" + this.#balance
+                );
+
+            }
+
+            showTransactions() {
+
+                print("<b>Transaction History</b>");
+
+                this.transactionHistory.forEach((t) => {
+
+                    print(t);
+
+                });
+
+            }
+
+            getBalance() {
+
+                return this.#balance;
+
+            }
+
+        }
+
+        class SavingsAccount extends BankAccount {
+
+            calculateInterest(rate) {
+
+                let interest =
+                    (this.getBalance() * rate) / 100;
+
+                print(
+                    "Interest Amount: ₹" + interest
+                );
+
+            }
+
+        }
+
+        class CurrentAccount extends BankAccount {
+
+            accountType() {
+
+                print("Current Account");
+
+            }
+
+        }
+
+        let s1 =
+            new SavingsAccount(
+                "John",
+                1234,
+                10000
+            );
+
+        if (s1.verifyPin(1234)) {
+
+            s1.deposit(5000);
+
+            s1.withdraw(2000);
+
+            s1.showBalance();
+
+            s1.calculateInterest(5);
+
+            s1.showTransactions();
+
+        }
+
+        let c1 =
+            new CurrentAccount(
+                "David",
+                5678,
+                20000
+            );
+
+        if (c1.verifyPin(5678)) {
+
+            c1.accountType();
+
+            c1.deposit(3000);
+
+            c1.showBalance();
+
+        }
+
+    </script>
+
+</body>
+</html>
