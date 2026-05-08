@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator Callback</title>
+</head>
+
+<body>
+
+    <script>
+
+        function calculate(a, b, callback) {
+
+            let result = a + b;
+
+            callback(result);
+
+        }
+
+        function display(result) {
+
+            document.body.innerHTML =
+                "<h1>Result is: " + result + "</h1>";
+
+        }
+
+        calculate(10, 20, display);
+
+    </script>
+
+</body>
+</html>
