@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Async Callback</title>
+</head>
+
+<body>
+
+    <h1 id="message">Waiting...</h1>
+
+    <script>
+
+        function showMessage(callback) {
+
+            setTimeout(function () {
+
+                callback();
+
+            }, 3000);
+
+        }
+
+        function displayMessage() {
+
+            document.getElementById("message")
+                .innerHTML =
+                "Message displayed after 3 seconds";
+
+        }
+
+        showMessage(displayMessage);
+
+    </script>
+
+</body>
+</html>
